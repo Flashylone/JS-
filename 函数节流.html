@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="clickme">dianwo</div>
+	<script>
+		var throllle = function(fn,interval){
+			var __self = fn,
+					timer,
+					firstTime = true;
+			return function(){
+				var args = arguments,
+						__me = this;
+				if(firstTime){
+					__self.apply(__me,args);
+					return firstTime = false;
+				}
+
+				if(timer){
+					return false;
+				}
+
+				timer = setTimeout(function(){
+						clearTimeout(timer);
+						timer = null;
+						__self.apply(__me,args);
+					},interval || 500);
+			};
+		}
+
+		document.querySelector('#clickme').onclick = throllle(function(){
+			console.log('click')
+		},1000);
+	</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// var salesOffices = {};
+
+		// salesOffices.clientList = [];
+
+		// salesOffices.listen = function( key, fn ){
+		// 	if ( !this.clientList[ key ]) {
+		// 		this.clientList[ key ] = [];
+		// 	}
+
+		// 	this.clientList[ key ].push( fn );
+		// };
+
+		// salesOffices.trigger = function(){
+		// 	var key = Array.prototype.shift.call( arguments ),
+		// 			fns = this.clientList[ key ];
+		// 	if( !fns || fns.length === 0 ){
+		// 		return false;
+		// 	}
+
+		// 	for( var i = 0, fn; fn = fns[ i++ ];){
+		// 		fn.apply( this, arguments );
+		// 	}
+		// };
+
+		// salesOffices.listen( 'squareMeter88', function(price){
+		// 	console.log(price);
+		// });
+		// salesOffices.listen( 'squareMeter188', function(price){
+		// 	console.log(price);
+		// });
+
+		// salesOffices.trigger( 'squareMeter88', 88);
+		// salesOffices.trigger( 'squareMeter188', 188);
+
+		// 提炼
+		var event = {
+			clientList: [],
+			listen: function( key, fn ){
+				if( !this.clientList[ key ] ){
+					this.clientList[ key ] = [];
+				}
+
+				this.clientList[ key ].push( fn );
+			},
+			trigger: function(){
+				var key = Array.prototype.shift.call( arguments ),
+						fns = this.clientList[ key ];
+
+				if( !fns || fns.length === 0){
+					return false;
+				}
+
+				for( var i = 0, fn; fn = fns[ i++ ]; ){
+					fn.apply( this, arguments );
+				}
+			}
+		}
+
+		// 取消订阅的事件
+		event.remove = function( key, fn ){
+			var fns = this.clientList[ key ];
+
+			if( !fns ){
+				return false;
+			}
+
+			if( !fn ){
+				fns && (fns.length = 0);
+			}else{
+				for( var l = fns.length -1; l >= 0; l--){
+					var _fn = fns[ 1 ];
+					if( _fn === fn ){
+						fns.splice( l, 1);
+					}
+				}
+			}
+		};
+
+		var installEvent = function( obj ){
+			for( var i in event ){
+				obj[ i ] = event[ i ];
+			}
+		};
+
+		var salesOffices = {};
+		installEvent( salesOffices );
+
+		salesOffices.listen( 'squareMeter88', fn1 = function( price ){
+			console.log(price);
+		});
+		salesOffices.listen( 'squareMeter88', function( price ){
+			console.log(price);
+		});
+
+		salesOffices.trigger( 'squareMeter110', 200000);
+		salesOffices.trigger( 'squareMeter88', 80000);
+
+
+
+		salesOffices.remove( 'squareMeter88', fn1);
+	</script>
+</body>
+</html>

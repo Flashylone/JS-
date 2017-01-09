@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var Flower = function(){};
+
+		var xiaoming = {
+			sendFlower: function( target ){
+				var flower = new Flower();
+				B.recieveFlower( flower );
+			}
+		};
+
+		var B = {
+			recieveFlower: function( flower ){
+				A.listenGoodMood(function(){
+					A.recieveFlower( flower );
+				});
+			}
+		};
+
+		var A = {
+			recieveFlower: function( flower ){
+				console.log( 'recieve ' + flower ); 
+			},
+			listenGoodMood: function( fn ){
+				setTimeout(fn,1000);
+			}
+		}
+
+		xiaoming.sendFlower( B );
+	</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="excute"></button>
+	<button id="undo"></button>
+	<script>
+		window.onload = function(){
+			var Tv = {
+				open: function(){
+					console.log('open TV');
+				},
+				close: function(){
+					console.log('close TV');
+				}
+			};
+
+			var createCommand = function(reciever){
+				var excute = function(){
+					return reciever.open();
+				}
+				var undo = function(){
+					return reciever.close();
+				}
+
+				return {
+					excute: excute,
+					undo: undo,
+				}
+			};
+
+			var setCommand = function( command ){
+				document.querySelector('#excute').onclick = function(){
+					command.excute();
+				}
+				document.querySelector('#undo').onclick = function(){
+					command.undo();
+				}
+			}
+
+			setCommand(createCommand(Tv));
+		}
+	</script>
+</body>
+</html>

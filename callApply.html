@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		window.onload = function(){
+			Function.prototype.bind = function(){
+				var self = this,
+					context = [].shift.call( arguments ),// obj
+					args = [].slice.call( arguments );// 1,2
+
+				return function(){
+					console.log(arguments)
+					return self.apply( context, [].concat.call( args,[].slice.call(arguments)));
+				}
+			}
+
+			var obj = {
+				name: 'myu'
+			};
+
+			var func = function(a,b,c,d){
+				// alert(this.name);
+				// alert([a,b,c,d]);
+			}.bind(obj,1,2);
+
+			func(3,4);
+
+
+			var A = function(name){
+				this.name = name;
+			}
+
+			var B = function(){
+				
+			}
+			B.prototype.getName = function(){
+				return this.name;
+			}
+			var C = function(){
+				A.apply(this,arguments);
+				// A中this被改为了C的this
+			}
+			C.prototype.getName = function(){
+				return this.name;
+			}
+
+			var b = new B('myu');
+			console.log(b.getName());
+			var c = new C('myu');
+			console.log(c.getName());
+		}
+	</script>
+</body>
+</html>

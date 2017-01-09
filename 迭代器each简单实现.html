@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var each = function( args, callback ){
+			for( var i = 0, l = args.length; i < l; i++){
+				callback.call( args[i], i , args[i]);
+			}
+		}
+
+		each([1,2,3],function( idx, ele ){
+			console.log(idx);
+			console.log(ele);
+		})
+	</script>
+</body>
+</html>

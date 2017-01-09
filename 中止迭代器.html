@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var each = function( ary, callback ){
+			for( var i = 0; i < ary.length; i++){
+				if( callback( i, ary[ i ]) === false){
+					break;
+				}
+			}
+		};
+
+		each( [1,2,3,4,5], function( i, n){
+			if( n > 3 ){
+				return false;
+			}
+			console.log( n );
+		})
+	</script>
+</body>
+</html>

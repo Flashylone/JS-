@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var closeDoorCommand = {
+			execute: function () {
+				/* body... */
+				console.log( 'close door' );
+			}
+		};
+
+		var openPcCommand = {
+			execute: function () {
+				/* body... */
+				console.log( 'open pc' );
+			}
+		};
+
+		var openQQCommand = {
+			execute: function () {
+				/* body... */
+				console.log( 'login QQ' );
+			}
+		};
+
+		var MacroCommand = function(){
+			return {
+				commandsList: [],
+				add: function( command ){
+					this.commandsList.push( command );
+				},
+				execute: function(){
+					for( var i = 0, command; command = this.commandsList[ i++ ]; ){
+						command.execute();
+					}
+				}
+			}
+		};
+
+		var macroCommand = MacroCommand();
+		macroCommand.add( closeDoorCommand );
+		macroCommand.add( openPcCommand );
+		macroCommand.add( openQQCommand );
+
+		macroCommand.execute();
+	</script>
+</body>
+</html>

@@ -11,8 +11,60 @@
 
 	<script>
 		var button1 = document.querySelector('#button1');
-		var button2 = document.query
+		var button2 = document.querySelector('#button2');
+		var button3 = document.querySelector('#button3');
+
+		var setCommand = function( button, command ){
+			button.onclick = function(){
+				command.execute();
+			}
+		};
+
+		var MenuBar = {
+			refresh: function(){
+				console.log('refresh menu');
+			}
+		};
+
+		var SubMenu = {
+			add: function(){
+				console.log( 'add menu item' );
+			},
+			del: function(){
+				console.log( 'del menu item' );
+			}
+		};
+
+		var RefreshMenuBarCommand = function( reciever ){
+			this.reciever = reciever;
+		}
+		RefreshMenuBarCommand.prototype.execute = function (){
+			this.reciever.refresh();
+		};
 		
+		var AddSubMenuCommand = function( reciever ){
+			this.reciever = reciever;
+		}
+
+		AddSubMenuCommand.prototype.execute = function() {
+			this.reciever.add();
+		};
+
+		var DelSubMenuCommand = function( reciever ){
+			this.reciever = reciever;
+		}
+
+		DelSubMenuCommand.prototype.execute = function() {
+			console.log( 'del menu item ');
+		};
+
+		var refreshMenuBarCommand = new RefreshMenuBarCommand( MenuBar );
+		var addSubMenuCommand = new AddSubMenuCommand( SubMenu );
+		var delSubMenuCommand = new DelSubMenuCommand( SubMenu );
+
+		setCommand( button1, refreshMenuBarCommand );
+		setCommand( button2, addSubMenuCommand );
+		setCommand( button3, delSubMenuCommand );
 	</script>
 </body>
 </html>

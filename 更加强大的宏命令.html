@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="button">click</button>
+	<script>
+		var MacroCommand = function(){
+			return {
+				commandsList: [],
+				add: function( command ){
+					this.commandsList.push( command );
+				},
+				execute: function(){
+					for( var i = 0, command; command = this.commandsList[ i++ ]; ){
+						command.execute();
+					}
+				}
+			}
+		}
+
+		var openAcCommand = {
+			 execute: function(){
+			 	console.log( 'open ac ');
+			 }
+		}
+
+		var openTvCommand = {
+			execute: function(){
+				console.log('open tv')
+			}
+		}
+
+		var openSoundCommand = {
+			execute: function () {
+				/* body... */
+				console.log( 'open audio ');
+			}
+		}
+
+		var macroCommand1 = MacroCommand();
+		macroCommand1.add( openTvCommand );
+		macroCommand1.add( openSoundCommand );
+
+		var closeDoorCommand = {
+			execute: function(){
+				console.log('open door')
+			}
+		}
+
+		var openPcCommand = {
+			execute: function(){
+				console.log( 'open pc' );
+			}
+		}
+
+		var openQQCommand = {
+			execute: function(){
+				console.log( 'open QQ');
+			}
+		}
+
+var macroCommand2 = MacroCommand();
+macroCommand2.add( closeDoorCommand );
+macroCommand2.add( openPcCommand );
+macroCommand2.add( openQQCommand );
+
+
+var macroCommand = MacroCommand();
+macroCommand.add( macroCommand1 );
+macroCommand.add( macroCommand2 );
+macroCommand.add( openAcCommand );
+
+var setCommand = (function( command ){
+	document.querySelector('#button').onclick = function(){
+		command.execute();
+	}
+})(macroCommand);
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>

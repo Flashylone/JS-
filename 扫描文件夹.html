@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h1>组合模式的案例</h1>
+	<script>
+		var Folder = function( name ){
+			this.name = name;
+			this.files = [];
+			// add
+			this.parent = null;
+		}
+		Folder.prototype.add = function(file){
+			// body... 
+			file.parent = this;// 设置父对象
+			this.files.push( file );
+		};
+
+		Folder.prototype.scan = function(){
+			// body... 
+			console.log( 'scan:' + this.name );
+			for( var i = 0, file, files = this.files; file = files[ i++ ];){
+				file.scan();
+			}
+		};
+
+		Folder.prototype.remove = function(){
+			// body... 
+			if( !this.parent ){
+				return;
+			}
+
+			for( var files = this.parent.files, l = files.length - 1; l >= 0; l--){
+				var file = files[ l ];
+				if( file === this ){
+					files.splice( l, 1 );
+				}
+			}
+		};
+
+		var File = function( name ){
+			this.name = name;
+			this.parent = null;
+		};
+
+		File.prototype.add = function(){
+			// body... 
+			throw new Error('文件下面不能添加文件')
+		};
+
+		File.prototype.scan = function(){
+			// body... 
+			console.log('scan:' + this.name);
+		};
+
+		File.prototype.remove = function(){
+			// body... 
+			if( !this.parent ){
+				return;
+			}
+
+			for( var files = this.parent.files, l = files.length - 1; l >= 0; l--){
+				var file = files[ l ];
+				if( file === this ){
+					files.splice( l, 1 );
+				}
+			}
+		};
+
+		var folder = new Folder( '学习资料' );
+		var folder1 = new Folder( 'js' );
+		var folder2 = new Folder( 'jq' );
+		var file1 = new File( 'js learn' );
+		var file2 = new File( 'jq learn' );
+		var file3 = new File( 'design' );
+
+		folder1.add( file1 );
+		folder2.add( file2 );
+
+		folder.add( folder1 );
+		folder.add( folder2 );
+		folder.add( file3 );
+
+		var folder3 = new Folder('node');
+		var file4 = new File( 'node learn ' );
+
+		folder3.add( file4 );
+
+		var file5 = new File('js design');
+		folder.add( folder3 );
+		folder.add( file5 );
+
+		folder1.remove();
+		folder.scan();
+	</script>
+</body>
+</html>

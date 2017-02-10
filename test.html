@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="myu_tween.js"></script>
+</head>
+<body>
+	<div style="width: 100%;height: 3000px;"></div>
+	<input type="button" value="tests"> 
+	<script>
+		var btn = document.querySelector('input[type=button]');
+		btn.onclick = function(){
+			var doc = document.body.scrollTop ? document.body : document.documentElement;
+			Math.easeOut( doc.scrollTop, 0, 4, function(value){
+				doc.scrollTop = value;
+			});
+		}
+	</script>
+</body>
+</html>
